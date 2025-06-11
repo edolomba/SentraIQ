@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Logistica Interna</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Dashboard</h1>
+        <i class="fas fa-bell notification-icon"></i>
+        <button id="logout-btn" class="logout-button">Logout</button>
+    </header>
+
+    <main class="main-content">
+        <section id="dashboard-view" class="card-section active-view">
+            <h2>Pedidos Ativos</h2>
+            <div id="active-shipments-list" class="shipment-list">
+                </div>
+
+            <section class="card-section notifications">
+                <h2>Notifiche</h2>
+                <div id="notifications-list" class="notification-list">
+                    </div>
+            </section>
+        </section>
+
+        <section id="add-shipment-view" class="hidden-view">
+            <h2>Adicionar Novo Pedido</h2>
+            <div class="form-card">
+                <label for="order-id">ID do Pedido:</label>
+                <input type="text" id="order-id" placeholder="Ex: A12345" required>
+
+                <label for="seller-name">Nome do Vendedor Responsável:</label>
+                <input type="text" id="seller-name" placeholder="Ex: João Silva" required>
+
+                <label for="order-origin">Origem (Rua, Cidade - UF):</label>
+                <input type="text" id="order-origin" placeholder="Ex: Rua Humberto Serrano 1126 Vila Velha - ES" required>
+
+                <label for="destination">Destino (Rua, Cidade - UF):</label>
+                <input type="text" id="destination" placeholder="Ex: Rua Cabo Verde 798 Rio De Janeiro - RJ" required>
+
+                <label for="delivery-date-promised">Data Promessa de Entrega (Vendedor):</label>
+                <input type="date" id="delivery-date-promised" required>
+
+                <button id="add-order-btn" class="primary-button">Adicionar Pedido</button>
+                <p id="validation-message" class="validation-message"></p>
+            </div>
+        </section>
+
+        <section id="chat-view" class="hidden-view">
+            <h2>Comunicação Interna</h2>
+            <div class="chat-container">
+                <div id="chat-messages" class="chat-messages">
+                    </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-message-input" placeholder="Digite sua mensagem...">
+                    <button id="send-chat-message-btn" class="primary-button"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="alerts-view" class="hidden-view">
+            <h2>Alertas de Processo</h2>
+            <div id="alerts-list" class="alerts-list">
+                </div>
+        </section>
+
+        <section id="evaluations-view" class="hidden-view">
+            <h2>Avaliação de Transportadoras</h2>
+            <div class="form-card">
+                <label for="filter-rating">Filtrar por Avaliação (Mínima):</label>
+                <select id="filter-rating">
+                    <option value="0">Todas as Avaliações</option>
+                    <option value="5">★★★★★ (5 Estrelas)</option>
+                    <option value="4">★★★★☆ (4 Estrelas)</option>
+                    <option value="3">★★★☆☆ (3 Estrelas)</option>
+                    <option value="2">★★☆☆☆ (2 Estrelas)</option>
+                    <option value="1">★☆☆☆☆ (1 Estrela)</option>
+                </select>
+            </div>
+            <div id="transportadoras-list" class="evaluations-list">
+                </div>
+        </section>
+
+        <section id="settings-view" class="hidden-view">
+            <h2>Configurações</h2>
+            <p style="text-align: center; color: #777;">Opções de configuração do sistema.</p>
+        </section>
+    </main>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item active" data-target="dashboard-view">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-target="add-shipment-view">
+            <i class="fas fa-plus-circle"></i>
+            <span>Novo Pedido</span>
+        </a>
+        <a href="#" class="nav-item" data-target="chat-view">
+            <i class="fas fa-comments"></i>
+            <span>Chat</span>
+        </a>
+        <a href="#" class="nav-item" data-target="alerts-view">
+            <i class="fas fa-bell"></i>
+            <span>Alertas</span>
+        </a>
+        <a href="#" class="nav-item" data-target="evaluations-view">
+            <i class="fas fa-star"></i>
+            <span>Transportadoras</span>
+        </a>
+         <a href="#" class="nav-item" data-target="settings-view">
+            <i class="fas fa-cog"></i>
+            <span>Configurações</span>
+        </a>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>
