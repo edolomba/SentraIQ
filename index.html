@@ -3,94 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard de Logística</title>
+    <title>Sistema de Gestão de Entregas</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-
-    <div id="auth-page" class="auth-container active">
+    <div id="auth-page" class="auth-container">
         <div class="auth-box">
-            <h2>Bem-vindo</h2>
-            <div id="login-section" class="auth-form active">
-                <h3>Login</h3>
-                <input type="text" id="login-email" placeholder="Email">
-                <input type="password" id="login-password" placeholder="Senha">
-                <button id="login-button">Entrar</button>
-                <p>Não tem uma conta? <span id="show-register" class="link">Cadastre-se aqui</span></p>
+            <img src="https://via.placeholder.com/150x50?text=Logo" alt="Logo da Empresa" class="logo">
+
+            <div id="login-section" class="auth-section active">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="input-group">
+                        <label for="login-email">Email:</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Senha:</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <button type="submit" id="login-button" class="btn-primary">Entrar</button>
+                </form>
+                <p>Não tem uma conta? <a href="#" id="show-register">Cadastre-se</a></p>
             </div>
 
-            <div id="register-section" class="auth-form">
-                <h3>Cadastro</h3>
-                <input type="text" id="register-email" placeholder="Email">
-                <input type="password" id="register-password" placeholder="Senha">
-                <input type="password" id="register-password-confirm" placeholder="Confirmar Senha">
-                <select id="register-role" class="input-field">
-                    <option value="">Selecione seu papel</option>
-                    <option value="venda">Vendas</option>
-                    <option value="logistica">Logística</option>
-                    <option value="financeiro">Financeiro</option>
-                    <option value="admin">Administrador</option>
-                </select>
-                <button id="register-button">Cadastrar</button>
-                <p>Já tem uma conta? <span id="show-login" class="link">Entrar aqui</span></p>
+            <div id="register-section" class="auth-section">
+                <h2>Cadastre-se</h2>
+                <form id="register-form">
+                    <div class="input-group">
+                        <label for="register-email">Email:</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-password">Senha:</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-password-confirm">Confirme a Senha:</label>
+                        <input type="password" id="register-password-confirm" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="register-role">Eu sou:</label>
+                        <select id="register-role" required>
+                            <option value="">Selecione um papel</option>
+                            <option value="venda">Vendas</option>
+                            <option value="logistica">Logística</option>
+                            <option value="financeiro">Financeiro</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="register-button" class="btn-primary">Registrar</button>
+                </form>
+                <p>Já tem uma conta? <a href="#" id="show-login">Faça Login</a></p>
             </div>
         </div>
     </div>
 
     <div id="dashboard-page" class="dashboard-container">
-        <header class="top-bar">
-            <div class="logo">LogisticsApp</div>
+        <header class="top-header">
             <div class="user-info">
                 <span id="display-user-email"></span> (<span id="display-user-role"></span>)
-                <button id="logout-button">Sair</button>
             </div>
+            <h1>Sistema de Gestão</h1>
+            <button id="logout-button" class="btn-secondary">Sair</button>
         </header>
 
-        <main class="main-content">
-            <section id="add-order-section" class="dashboard-section active">
+        <main class="dashboard-main">
+            <section id="add-order-section" class="dashboard-section">
                 <h2>Adicionar Novo Pedido</h2>
-                <form id="add-order-form" class="order-form">
-                    <div class="form-group">
+                <form id="add-order-form">
+                    <div class="input-group">
                         <label for="client-name">Nome do Cliente:</label>
                         <input type="text" id="client-name" required>
                     </div>
-                    <div class="form-group">
+                    <div class="input-group">
                         <label for="product-description">Descrição do Produto:</label>
-                        <textarea id="product-description" rows="3" required></textarea>
+                        <input type="text" id="product-description" required>
                     </div>
-                    <div class="form-group">
-                        <label for="freight-value">Valor do Frete (R$):</label>
-                        <input type="number" id="freight-value" step="0.01" min="0" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="order-value">Valor Total do Pedido (R$):</label>
-                        <input type="number" id="order-value" step="0.01" min="0" required>
-                    </div>
-                    <div class="form-group">
+                    <div class="input-group">
                         <label for="departure-address">Endereço de Partida:</label>
                         <input type="text" id="departure-address" required>
                     </div>
-                    <div class="form-group">
-                        <label for="delivery-address">Endereço de Destino:</label>
+                    <div class="input-group">
+                        <label for="delivery-address">Endereço de Entrega:</label>
                         <input type="text" id="delivery-address" required>
                     </div>
-                    <div class="form-group">
+                    <div class="input-group">
                         <label for="delivery-date">Data de Entrega:</label>
                         <input type="date" id="delivery-date" required>
-                    </div>
-                    <div class="form-group" id="freight-percentage-display">
-                        <label>Percentual do Frete:</label>
-                        <span id="freight-percentage" style="font-weight: bold;">--</span>
                     </div>
                     <button type="submit" class="btn-primary">Adicionar Pedido</button>
                 </form>
             </section>
 
-            <section id="active-shipments-section" class="dashboard-section">
-                <h2>Envios Ativos</h2>
-                <div class="filter-bar">
-                    <input type="text" id="shipment-search" placeholder="Buscar envio...">
+            <section id="active-shipments-section" class="dashboard-section active">
+                <h2>Pedidos Ativos</h2>
+                <div class="filter-controls">
+                    <input type="text" id="shipment-search" placeholder="Buscar por cliente, produto, endereço...">
                     <select id="status-filter">
                         <option value="all">Todos os Status</option>
                         <option value="pending">Pendente</option>
@@ -103,14 +113,14 @@
                         <option value="cancelled">Cancelado</option>
                     </select>
                 </div>
-                <div class="active-shipments-list" id="shipments-list">
+                <div id="shipments-list" class="cards-list">
                     </div>
             </section>
 
             <section id="transporters-section" class="dashboard-section">
-                <h2>Transportadoras</h2>
-                <div class="filter-bar">
-                    <input type="text" id="transporter-search" placeholder="Buscar transportadora...">
+                <h2>Transportadoras Parceiras</h2>
+                <div class="filter-controls">
+                    <input type="text" id="transporter-search" placeholder="Buscar por nome, contato...">
                     <select id="rating-filter">
                         <option value="all">Todas as Avaliações</option>
                         <option value="5">5 Estrelas</option>
@@ -120,70 +130,87 @@
                         <option value="1">1 Estrela</option>
                     </select>
                 </div>
-                <div class="transporter-list" id="transporters-list">
+                <div id="transporters-list" class="cards-list">
                     </div>
             </section>
 
             <section id="notifications-section" class="dashboard-section">
                 <h2>Notificações</h2>
-                <div class="notification-list" id="notifications-list">
+                <div id="notifications-list" class="cards-list">
                     </div>
             </section>
 
-            <section id="chat-section" class="dashboard-section chat-overlay">
-                <div class="chat-header">
-                    <h3 id="chat-order-title">Chat do Pedido</h3>
-                    <button id="close-chat-btn" class="btn-secondary">X</button>
-                </div>
-                <div class="chat-messages" id="chat-messages">
-                    </div>
-                <div class="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
-                    <label for="chat-file-input" class="file-upload-btn">
-                        <i class="fas fa-paperclip"></i>
-                        <input type="file" id="chat-file-input" accept="image/*,.pdf,.doc,.docx" style="display: none;">
-                    </label>
-                    <button id="send-chat-btn" class="btn-primary">Enviar</button>
-                </div>
-            </section>
-
-             <section id="map-section" class="dashboard-section">
-                <h2>Rastreamento em Tempo Real</h2>
-                <div id="map-container" style="height: 400px; background-color: #e0e0e0; display: flex; align-items: center; justify-content: center; color: #888; border-radius: 8px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);">
-                    <p>Mapa de Rastreamento Mock (Integração Google Maps/OpenStreetMap)</p>
-                </div>
+            <section id="map-section" class="dashboard-section">
+                <h2>Mapa de Entregas</h2>
                 <div class="map-controls">
+                    <label for="select-order-for-map">Visualizar Pedido:</label>
                     <select id="select-order-for-map">
                         <option value="">Selecione um Pedido</option>
                         </select>
-                    <button id="update-location-btn" class="btn-secondary">Atualizar Localização (Mock)</button>
+                    <button id="update-location-btn" class="btn-primary">Atualizar Localização (Mock)</button>
+                </div>
+                <div class="map-placeholder">
+                    <p>Simulação de Mapa: A localização do pedido apareceria aqui.</p>
+                    <img src="https://via.placeholder.com/600x400?text=Mapa+de+Entregas" alt="Placeholder do Mapa">
+                </div>
+            </section>
+
+            <section id="chat-section" class="dashboard-section chat-page">
+                <div class="chat-header">
+                    <button id="close-chat-btn" class="btn-icon"><i class="fas fa-arrow-left"></i></button>
+                    <h2 id="chat-order-title">Conversa do Pedido</h2>
+                </div>
+                <div id="chat-messages" class="chat-messages">
+                    </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
+                    <input type="file" id="chat-file-input" style="display: none;">
+                    <label for="chat-file-input" class="btn-icon attachment-icon"><i class="fas fa-paperclip"></i></label>
+                    <button id="send-chat-btn" class="btn-primary"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </section>
+
+            <section id="internal-chat-section" class="dashboard-section chat-page">
+                <div class="chat-header">
+                    <h2>Chat Interno</h2>
+                </div>
+                <div id="internal-chat-messages" class="chat-messages">
+                    </div>
+                <div class="chat-input-area">
+                    <input type="text" id="internal-chat-input" placeholder="Digite sua mensagem interna...">
+                    <button id="send-internal-chat-btn" class="btn-primary"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </section>
 
         </main>
 
-        <footer class="bottom-nav">
-            <button class="nav-item active" data-target="active-shipments-section">
-                <i class="fas fa-truck"></i>
-                <span>Envios</span>
-            </button>
-            <button class="nav-item" data-target="add-order-section">
+        <nav class="bottom-nav">
+            <div class="nav-item" data-target="add-order-section">
                 <i class="fas fa-plus-circle"></i>
-                <span>Novo Pedido</span>
-            </button>
-            <button class="nav-item" data-target="transporters-section">
+                <span>Adicionar</span>
+            </div>
+            <div class="nav-item active" data-target="active-shipments-section">
+                <i class="fas fa-truck"></i>
+                <span>Pedidos</span>
+            </div>
+            <div class="nav-item" data-target="transporters-section">
                 <i class="fas fa-shipping-fast"></i>
-                <span>Transportadoras</span>
-            </button>
-            <button class="nav-item" data-target="notifications-section">
+                <span>Transportes</span>
+            </div>
+            <div class="nav-item" data-target="notifications-section">
                 <i class="fas fa-bell"></i>
                 <span>Notificações</span>
-            </button>
-            <button class="nav-item" data-target="map-section">
+            </div>
+            <div class="nav-item" data-target="internal-chat-section">
+                <i class="fas fa-comments"></i>
+                <span>Chat Interno</span>
+                <span id="internal-chat-indicator" class="new-message-indicator hidden"></span>
+            </div>
+            <div class="nav-item" data-target="map-section">
                 <i class="fas fa-map-marked-alt"></i>
                 <span>Mapa</span>
-            </button>
-        </footer>
+            </div>
+        </nav>
     </div>
 
     <script src="script.js"></script>
