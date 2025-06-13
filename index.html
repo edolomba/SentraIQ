@@ -98,20 +98,6 @@
                             <button class="btn-secondary view-chat-btn" data-id="1">Ver Chat</button>
                         </div>
                     </div>
-                    <div class="shipment-card" data-id="2">
-                        <div class="card-header">
-                            <h3>Pedido #002 - Cliente B</h3>
-                            <span class="status in-transit">Em Trânsito</span>
-                        </div>
-                        <p>Endereço: Av. Y, 456</p>
-                        <p>Produto: Geladeira</p>
-                        <p>Entrega: 2025-06-20</p>
-                        <p>Responsável: Transportadora Alfa</p>
-                        <div class="card-actions">
-                            <button class="btn-secondary update-status-btn" data-current-status="in-transit">Atualizar Status</button>
-                            <button class="btn-secondary view-chat-btn" data-id="2">Ver Chat</button>
-                        </div>
-                    </div>
                 </div>
             </section>
 
@@ -136,23 +122,12 @@
                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> (4.5)
                         </div>
                     </div>
-                    <div class="transporter-card">
-                        <h3>Transportadora B</h3>
-                        <p>Contato: (21) 1234-5678</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i> (4.0)
-                        </div>
-                    </div>
                 </div>
             </section>
 
             <section id="notifications-section" class="dashboard-section">
                 <h2>Notificações</h2>
                 <div class="notification-list" id="notifications-list">
-                    <div class="notification-card read">
-                        <p>Pedido #001 - Status atualizado para "Em Trânsito".</p>
-                        <span>10 min atrás</span>
-                    </div>
                     <div class="notification-card unread">
                         <p>Novo pedido #003 adicionado por Vendedor Z.</p>
                         <span>2 horas atrás</span>
@@ -170,28 +145,6 @@
                         <span class="message-sender">Logística</span>
                         <p>Olá, o pedido já saiu para entrega?</p>
                         <span class="message-time">14:30</span>
-                    </div>
-                    <div class="chat-message sent">
-                        <span class="message-sender">Você (Vendas)</span>
-                        <p>Sim, acabou de sair. O entregador está a caminho.</p>
-                        <span class="message-time">14:35</span>
-                    </div>
-                    <div class="chat-message received">
-                        <span class="message-sender">Transportadora</span>
-                        <p>Segue a foto da carga:</p>
-                        <a href="#" class="chat-attachment" data-file-url="mock-image.jpg" data-file-type="image">
-                            <img src="https://via.placeholder.com/100x70?text=Imagem+Anexo" alt="Anexo">
-                            <span>mock-image.jpg</span>
-                        </a>
-                        <span class="message-time">14:40</span>
-                    </div>
-                    <div class="chat-message sent">
-                        <span class="message-sender">Você (Admin)</span>
-                        <a href="#" class="chat-attachment" data-file-url="document.pdf" data-file-type="pdf">
-                            <i class="fas fa-file-pdf"></i>
-                            <span>documento.pdf</span>
-                        </a>
-                        <span class="message-time">14:45</span>
                     </div>
                 </div>
                 <div class="chat-input-area">
@@ -212,9 +165,7 @@
                 <div class="map-controls">
                     <select id="select-order-for-map">
                         <option value="">Selecione um Pedido</option>
-                        <option value="1">Pedido #001</option>
-                        <option value="2">Pedido #002</option>
-                    </select>
+                        </select>
                     <button id="update-location-btn" class="btn-secondary">Atualizar Localização (Mock)</button>
                 </div>
             </section>
@@ -242,7 +193,7 @@
                 <i class="fas fa-map-marked-alt"></i>
                 <span>Mapa</span>
             </button>
-            </footer>
+        </footer>
     </div>
 
     <script src="script.js"></script>
