@@ -21,13 +21,25 @@ body {
     align-items: center;
     min-height: 100vh;
     background: linear-gradient(135deg, #6dd5ed, #2193b0);
-    position: fixed;
+    position: fixed; /* Fixa na tela */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 1000; /* Garante que esteja no topo */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Transição para ocultar/mostrar */
 }
+
+.auth-container:not(.active) { /* CRUCIALE: Oculta se não tiver a classe active */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* Impede interações */
+    display: none; /* Finalmente, esconde completamente */
+}
+/* Se precisar de uma transição mais suave, use apenas opacity/visibility.
+   Se quiser sumir imediatamente, use display: none.
+   Eu adicionei display: none para garantir que some totalmente do fluxo. */
+
 
 .auth-box {
     background-color: #fff;
@@ -107,7 +119,7 @@ body {
 }
 
 .dashboard-container.active {
-    display: flex;
+    display: flex; /* Ou block, para mostrar o dashboard */
 }
 
 .top-bar {
