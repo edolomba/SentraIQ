@@ -1,393 +1,454 @@
-/* Estilo Geral */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Variáveis CSS */
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --warning-color: #ffc107;
+    --info-color: #17a2b8;
+    --background-color: #f8f9fa;
+    --card-background: #ffffff;
+    --text-color: #343a40;
+    --border-color: #dee2e6;
+    --header-footer-bg: #e9ecef;
+    --nav-item-active-bg: #e0e0e0;
+}
+
+/* Reset Básico */
+* {
     margin: 0;
     padding: 0;
-    background-color: #f4f7f6;
-    color: #333;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; /* Garante altura total da viewport */
-}
-
-.hidden {
-    display: none !important;
-}
-
-/* Estilo da Página de Autenticação */
-.auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: linear-gradient(135deg, #6dd5ed, #2193b0);
-    position: fixed; /* Fixa na tela */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000; /* Garante que esteja no topo */
-    transition: opacity 0.3s ease, visibility 0.3s ease; /* Transição para ocultar/mostrar */
-}
-
-.auth-container:not(.active) { /* CRUCIALE: Oculta se não tiver a classe active */
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none; /* Impede interações */
-    display: none; /* Finalmente, esconde completamente */
-}
-
-.auth-box {
-    background-color: #fff;
-    padding: 30px 40px;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
     box-sizing: border-box;
 }
 
-.auth-box h2 {
-    color: #2193b0;
-    margin-bottom: 25px;
-}
-
-.auth-form {
-    display: none; /* Oculta todos os formulários por padrão, JS mostrará o ativo */
-}
-
-.auth-form.active {
-    display: block;
-}
-
-.auth-form h3 {
-    margin-bottom: 20px;
-    color: #444;
-}
-
-.auth-container input[type="text"],
-.auth-container input[type="password"],
-.auth-container select {
-    width: calc(100% - 20px);
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 1em;
-    box-sizing: border-box;
-}
-
-.auth-container button {
-    background-color: #2193b0;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-    width: 100%;
-}
-
-.auth-container button:hover {
-    background-color: #1a7e93;
-}
-
-.auth-container .link {
-    color: #2193b0;
-    cursor: pointer;
-    margin-top: 15px;
-    display: inline-block;
-    font-size: 0.9em;
-}
-
-.auth-container .link:hover {
-    text-decoration: underline;
-}
-
-/* Layout do Dashboard */
-.dashboard-container {
-    display: none; /* Oculto por padrão, mostrado por JS após o login */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-.dashboard-container.active {
-    display: flex; /* Ou block, para mostrar o dashboard */
-}
-
-.top-bar {
-    background-color: #2c3e50;
-    color: white;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.top-bar .logo {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.top-bar .user-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.top-bar .user-info button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
-    transition: background-color 0.3s ease;
-}
-
-.top-bar .user-info button:hover {
-    background-color: #c0392b;
-}
-
-.main-content {
-    flex-grow: 1;
+/* --- Estilos Gerais --- */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    background-color: #f4f7f6;
-    overflow-y: auto; /* Habilita rolagem para conteúdo */
-    padding-bottom: 80px; /* Espaço para a barra de navegação inferior */
 }
 
-.dashboard-section {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+h1, h2 {
+    color: var(--primary-color);
     margin-bottom: 20px;
-    display: none; /* Oculto por padrão, JS gerenciará a seção ativa */
-}
-
-.dashboard-section.active {
-    display: block;
-}
-
-.dashboard-section h2 {
-    color: #2c3e50;
-    margin-top: 0;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
-}
-
-/* Estilo do Formulário */
-.order-form .form-group {
-    margin-bottom: 15px;
-}
-
-.order-form label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #555;
-}
-
-.order-form input[type="text"],
-.order-form input[type="date"],
-.order-form input[type="number"], /* Aggiunto per i nuovi campi */
-.order-form textarea {
-    width: calc(100% - 22px);
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1em;
-    box-sizing: border-box;
 }
 
 .btn-primary {
-    background-color: #28a745;
+    background-color: var(--primary-color);
     color: white;
-    padding: 10px 20px;
+    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 1rem;
     transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: #218838;
-}
-
-.btn-secondary {
-    background-color: #007bff;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.9em;
-    transition: background-color 0.3s ease;
-    margin-left: 5px; /* Para botões em cards */
-}
-
-.btn-secondary:hover {
     background-color: #0056b3;
 }
 
-/* Barra de Filtro */
-.filter-bar {
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 5px;
+}
+
+.btn-icon:hover {
+    color: #0056b3;
+}
+
+
+/* --- Página de Autenticação --- */
+.auth-container {
+    position: fixed; /* Fixado para cobrir a tela */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; /* Garante que o conteúdo seja centralizado */
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-color);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 1000; /* Garante que esteja acima de outros elementos */
+}
+
+/* Estado quando a página de autenticação não está ativa (usuário logado) */
+.auth-container:not(.active) {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* Crucial: impede interações de clique quando invisível */
+}
+
+.auth-box {
+    background-color: var(--card-background);
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.auth-box .logo {
+    margin-bottom: 20px;
+    max-width: 150px;
+    height: auto;
+}
+
+.auth-section {
+    display: none; /* Oculto por padrão, JS gerencia qual está ativo */
+    flex-direction: column;
+}
+
+.auth-section.active {
+    display: flex; /* Mostra a seção ativa */
+}
+
+.auth-section h2 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+.input-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input[type="email"],
+.input-group input[type="password"],
+.input-group input[type="text"],
+.input-group input[type="date"],
+.input-group input[type="number"],
+.input-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.auth-section p {
+    margin-top: 15px;
+}
+
+.auth-section p a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.auth-section p a:hover {
+    text-decoration: underline;
+}
+
+/* --- Dashboard Container --- */
+.dashboard-container {
+    display: none; /* Oculto por padrão, mostrado por JS após o login */
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
+.dashboard-container.active {
+    display: flex; /* Ativa o layout flex para o dashboard */
+}
+
+/* --- Top Header --- */
+.top-header {
+    background-color: var(--header-footer-bg);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.top-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.top-header .user-info {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+/* --- Main Content (Dashboard Sections) --- */
+.dashboard-main {
+    flex-grow: 1; /* Ocupa o espaço restante */
+    padding: 20px;
+    overflow-y: auto; /* Permite scroll se o conteúdo for grande */
+    padding-bottom: 80px; /* Espaço para a nav inferior */
+}
+
+.dashboard-section {
+    background-color: var(--card-background);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    margin-bottom: 20px;
+    display: none; /* Oculto por padrão, JS gerenciará a seção ativa */
+    flex-direction: column; /* Para seções que precisam de layout flex interno (como chat) */
+    min-height: calc(100vh - 150px); /* Altura mínima para ocupar a tela */
+}
+
+.dashboard-section.active {
+    display: flex; /* Exibe a seção ativa como flexbox */
+}
+
+/* Força a exibir como block para seções que não precisam de flexbox interno */
+#add-order-section.active,
+#active-shipments-section.active,
+#transporters-section.active,
+#notifications-section.active,
+#map-section.active {
+    display: block;
+}
+
+.dashboard-section.hidden {
+    display: none !important; /* Esconde seções que o usuário não tem permissão para ver */
+}
+
+.filter-controls {
     display: flex;
     gap: 10px;
     margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
-.filter-bar input,
-.filter-bar select {
+.filter-controls input,
+.filter-controls select {
     flex: 1;
+    min-width: 150px;
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
 }
 
-/* Card de Envio */
-.active-shipments-list, .transporter-list, .notification-list {
+.cards-list {
     display: grid;
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
 }
 
+/* Shipment Card */
 .shipment-card, .transporter-card, .notification-card {
-    background-color: #f9f9f9;
-    border: 1px solid #eee;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.shipment-card .card-header, .transporter-card h3 {
+.shipment-card .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
-    font-size: 1.1em;
-    color: #2c3e50;
+}
+
+.shipment-card .card-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--primary-color);
 }
 
 .shipment-card .status {
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-size: 0.8em;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
     font-weight: bold;
     color: white;
 }
 
-/* Colori per gli stati dei pedidos */
-.status.pending { background-color: #ffc107; } /* Amarelo */
-.status.venda_concluida { background-color: #17a2b8; } /* Azul ciano */
-.status.nota_fiscal_emitida { background-color: #6f42c1; } /* Roxo */
-.status.coletado { background-color: #28a745; } /* Verde scuro */
-.status.em_transito { background-color: #007bff; } /* Azul */
-.status.em_rota_entrega { background-color: #fd7e14; } /* Arancione */
-.status.retirado_cliente { background-color: #6c757d; } /* Grigio (Finale) */
-.status.cancelled { background-color: #dc3545; } /* Vermelho (Finale) */
-
+/* Status Colors */
+.shipment-card .status.pending { background-color: var(--secondary-color); }
+.shipment-card .status.venda_concluida { background-color: var(--primary-color); }
+.shipment-card .status.nota_fiscal_emitida { background-color: var(--info-color); }
+.shipment-card .status.coletado { background-color: #6f42c1; /* roxo */ }
+.shipment-card .status.em_transito { background-color: #fd7e14; /* laranja */ }
+.shipment-card .status.em_rota_entrega { background-color: var(--warning-color); color: var(--text-color); } /* amarelo */
+.shipment-card .status.retirado_cliente { background-color: var(--success-color); }
+.shipment-card .status.cancelled { background-color: var(--danger-color); }
 
 .shipment-card p {
-    margin: 5px 0;
-    font-size: 0.95em;
-    color: #666;
+    font-size: 0.9rem;
+    color: var(--text-color);
 }
 
-.shipment-card .card-actions {
-    margin-top: 15px;
-    text-align: right;
-    display: flex; /* Usa flexbox per allineare selettore e pulsante */
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px; /* Spazio tra gli elementi */
-}
-
-/* Card de Transportadora */
-.transporter-card .rating {
-    color: #f39c12; /* Cor da estrela */
-    font-size: 1.1em;
+.shipment-card .freight-info {
+    font-size: 0.85rem;
     margin-top: 5px;
 }
 
-/* Notificazioni */
-.notification-card {
-    border-left: 5px solid #2193b0;
+.shipment-card .percentage-display.green { color: var(--success-color); font-weight: bold; }
+.shipment-card .percentage-display.red { color: var(--danger-color); font-weight: bold; }
+
+.shipment-card .freight-value-inputs {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 10px;
+}
+.shipment-card .freight-value-inputs input {
+    padding: 5px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    width: 100%;
+}
+.shipment-card .freight-value-inputs button {
+    align-self: flex-start;
+    margin-top: 5px;
 }
 
-.notification-card.read {
-    opacity: 0.7;
-    border-left-color: #ccc;
+
+.shipment-card .shipment-timer {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: var(--primary-color);
+}
+
+.shipment-card .shipment-timer.warning {
+    color: var(--warning-color);
+}
+
+.shipment-card .shipment-timer.late {
+    color: var(--danger-color);
+    animation: pulse-red 1s infinite alternate;
+}
+
+@keyframes pulse-red {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(1.03); opacity: 0.8; }
+}
+
+.shipment-card .card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end; /* Alinha botões à direita */
+}
+
+.shipment-card .status-selector {
+    flex-grow: 1;
+    padding: 6px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 0.85rem;
+    min-width: 120px;
+}
+
+/* Transporter Card */
+.transporter-card {
+    gap: 5px;
+}
+
+.transporter-card h3 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.transporter-card .rating {
+    color: var(--warning-color); /* Estrelas amarelas */
+    font-size: 1rem;
+}
+
+.transporter-card .rating i {
+    margin-right: 2px;
+}
+
+/* Notification Card */
+.notification-card {
+    border-left: 5px solid var(--primary-color);
+    gap: 0;
 }
 
 .notification-card.unread {
-    background-color: #e7f3ff;
+    border-left-color: var(--danger-color); /* Notificações não lidas mais evidentes */
     font-weight: bold;
 }
 
-.notification-card span {
-    font-size: 0.8em;
-    color: #999;
-    white-space: nowrap; /* Evita que o tempo quebre a linha */
+.notification-card p {
+    font-size: 0.95rem;
+    margin-bottom: 5px;
 }
 
-/* Seção de Chat */
-.chat-overlay {
-    position: fixed;
-    bottom: 80px; /* Acima da barra de navegação inferior */
-    right: 20px;
-    width: 350px;
-    height: 450px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    z-index: 999; /* Abaixo da página de autenticação, acima do conteúdo do dashboard */
-    border: 1px solid #ddd;
+.notification-card span {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+}
+
+/* --- Chat Sections (Pedido e Interno) --- */
+.chat-page {
+    justify-content: space-between; /* Mantém cabeçalho e input fixos */
+    min-height: calc(100vh - 150px);
 }
 
 .chat-header {
-    background-color: #2c3e50;
-    color: white;
-    padding: 15px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 15px;
+    flex-shrink: 0; /* Não encolher */
 }
 
-.chat-header h3 {
-    margin: 0;
-    font-size: 1.1em;
-}
-
-.chat-header button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2em;
-    cursor: pointer;
-    padding: 5px;
+.chat-header h2 {
+    margin: 0 0 0 10px;
+    font-size: 1.3rem;
+    color: var(--primary-color);
 }
 
 .chat-messages {
-    flex-grow: 1;
-    padding: 15px;
-    overflow-y: auto;
-    background-color: #f0f2f5;
+    flex-grow: 1; /* Preenche o espaço disponível */
+    overflow-y: auto; /* Permite scroll nas mensagens */
+    padding-right: 10px; /* Para não cortar o scrollbar */
+    margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -395,180 +456,256 @@ body {
 
 .chat-message {
     max-width: 80%;
-    padding: 10px;
-    border-radius: 8px;
-    word-wrap: break-word;
-    font-size: 0.9em;
+    padding: 8px 12px;
+    border-radius: 15px;
+    position: relative;
 }
 
 .chat-message.sent {
-    align-self: flex-end;
-    background-color: #dcf8c6; /* Verde claro */
-    border-bottom-right-radius: 0;
+    background-color: var(--primary-color);
+    color: white;
+    align-self: flex-end; /* Alinha à direita */
+    border-bottom-right-radius: 5px;
 }
 
 .chat-message.received {
-    align-self: flex-start;
-    background-color: #ffffff; /* Branco */
-    border: 1px solid #e0e0e0;
-    border-bottom-left-radius: 0;
+    background-color: var(--header-footer-bg);
+    color: var(--text-color);
+    align-self: flex-start; /* Alinha à esquerda */
+    border-bottom-left-radius: 5px;
 }
 
-.message-sender {
+.chat-message .message-sender {
     font-weight: bold;
-    font-size: 0.85em;
-    color: #4a4a4a;
-    margin-bottom: 3px;
+    font-size: 0.8em;
+    opacity: 0.8;
     display: block;
+    margin-bottom: 2px;
 }
+.chat-message.sent .message-sender { color: rgba(255, 255, 255, 0.7); }
+.chat-message.received .message-sender { color: var(--secondary-color); }
+
 
 .chat-message p {
     margin: 0;
+    font-size: 0.95rem;
+    word-wrap: break-word; /* Quebra palavras longas */
 }
 
-.message-time {
-    font-size: 0.75em;
-    color: #888;
-    text-align: right;
-    margin-top: 5px;
+.chat-message .message-time {
     display: block;
-}
-
-.chat-input-area {
-    display: flex;
-    padding: 10px;
-    border-top: 1px solid #eee;
-    background-color: #fff;
-    align-items: center;
-}
-
-.chat-input-area input[type="text"] {
-    flex-grow: 1;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
-    margin-right: 10px;
-    font-size: 0.95em;
-}
-
-.chat-input-area button {
-    background-color: #2193b0;
-    color: white;
-    border: none;
-    border-radius: 20px;
-    padding: 8px 15px;
-    cursor: pointer;
-    font-size: 0.9em;
-    transition: background-color 0.3s ease;
-}
-
-.chat-input-area button:hover {
-    background-color: #1a7e93;
-}
-
-.file-upload-btn {
-    background-color: #f0f2f5;
-    border-radius: 50%;
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin-right: 10px;
-    color: #555;
-    transition: background-color 0.2s;
-}
-
-.file-upload-btn:hover {
-    background-color: #e0e2e5;
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 5px;
+    text-align: right;
 }
 
 .chat-attachment {
     display: flex;
     align-items: center;
     gap: 5px;
-    margin-top: 8px;
-    border: 1px solid #ccc;
-    padding: 5px;
-    border-radius: 5px;
-    background-color: #f0f0f0;
-    text-decoration: none;
-    color: #333;
-    max-width: 100%;
+    margin-top: 5px;
+    color: inherit; /* Herda a cor do texto da mensagem */
+    text-decoration: underline;
 }
-
 .chat-attachment img {
-    max-width: 70px;
-    max-height: 50px;
-    border-radius: 3px;
-    object-fit: cover;
+    max-width: 100px;
+    max-height: 100px;
+    border-radius: 5px;
 }
-
 .chat-attachment i {
-    font-size: 1.2em;
-    color: #007bff;
+    font-size: 1.2rem;
 }
 
-.chat-attachment span {
-    font-size: 0.85em;
+
+.chat-input-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+    flex-shrink: 0; /* Não encolher */
+}
+
+.chat-input-area input[type="text"] {
     flex-grow: 1;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 1rem;
 }
 
-/* Navegação Inferior */
+.chat-input-area .btn-primary,
+.chat-input-area .btn-icon {
+    padding: 10px 15px;
+    border-radius: 20px;
+}
+.chat-input-area .attachment-icon {
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: var(--header-footer-bg);
+}
+.chat-input-area .attachment-icon:hover {
+    background-color: var(--border-color);
+}
+
+
+/* --- Mapa --- */
+.map-placeholder {
+    width: 100%;
+    height: 400px; /* Altura fixa para o placeholder do mapa */
+    background-color: #e0e0e0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    flex-direction: column;
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+    margin-top: 20px;
+}
+.map-placeholder img {
+    margin-top: 10px;
+    border-radius: 5px;
+    max-width: 90%;
+    height: auto;
+}
+
+.map-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+.map-controls select {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    flex-grow: 1;
+    min-width: 200px;
+}
+.map-controls button {
+    flex-shrink: 0;
+}
+
+/* --- Bottom Navigation Bar --- */
 .bottom-nav {
+    background-color: var(--header-footer-bg);
     display: flex;
     justify-content: space-around;
-    background-color: #2c3e50;
     padding: 10px 0;
-    position: sticky; /* Fica no fundo */
+    border-top: 1px solid var(--border-color);
+    position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 100; /* Abaixo da página de autenticação, acima do conteúdo principal se rolado */
+    z-index: 999;
 }
 
 .bottom-nav .nav-item {
-    background: none;
-    border: none;
-    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: 0.8em;
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 0.75rem;
     cursor: pointer;
     padding: 5px;
     border-radius: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative; /* Para o indicador de nova mensagem */
+}
+
+.bottom-nav .nav-item.hidden {
+    display: none; /* Oculta itens de navegação baseados na permissão */
 }
 
 .bottom-nav .nav-item:hover,
 .bottom-nav .nav-item.active {
-    background-color: #34495e;
+    background-color: var(--nav-item-active-bg);
+    color: var(--primary-color);
 }
 
-/* Per la percentual del frete */
-#freight-percentage-display {
-    margin-top: 10px;
-    padding: 8px;
-    border-radius: 4px;
-    background-color: #f0f0f0;
-    text-align: center;
+.bottom-nav .nav-item i {
+    font-size: 1.3rem;
+    margin-bottom: 3px;
 }
 
-#freight-percentage {
-    font-size: 1.1em;
+.bottom-nav .nav-item span {
+    white-space: nowrap;
 }
 
-/* Per i selettori di stato nell'elenco degli invii */
-.status-selector {
-    padding: 6px 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #f8f8f8;
-    font-size: 0.9em;
-    cursor: pointer;
+.new-message-indicator {
+    position: absolute;
+    top: 0px; /* Ajuste conforme necessário */
+    right: 5px; /* Ajuste conforme necessário */
+    background-color: var(--danger-color);
+    color: white;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    font-size: 0.6rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Remove text-content from indicator as it's just a dot */
+}
+.new-message-indicator.hidden {
+    display: none;
+}
+
+/* Responsividade Básica */
+@media (max-width: 768px) {
+    .auth-box {
+        margin: 20px;
+    }
+
+    .top-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    .top-header h1 {
+        font-size: 1.3rem;
+    }
+    .top-header .user-info {
+        font-size: 0.8rem;
+    }
+
+    .dashboard-main {
+        padding: 10px;
+    }
+
+    .dashboard-section {
+        padding: 15px;
+    }
+
+    .cards-list {
+        grid-template-columns: 1fr; /* Uma coluna em telas menores */
+    }
+
+    .filter-controls {
+        flex-direction: column;
+    }
+
+    .bottom-nav {
+        padding: 8px 0;
+    }
+    .bottom-nav .nav-item {
+        font-size: 0.7rem;
+    }
+    .bottom-nav .nav-item i {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-box {
+        padding: 20px;
+    }
 }
