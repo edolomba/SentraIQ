@@ -3,64 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SentraIQ - Dashboard Logística</title>
+    <title>Cadastro - Dashboard Logística</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-        <h1>SentraIQ</h1>
-        <div class="header-info">
-            <span id="current-role"></span>
-            <i class="fas fa-bell notification-icon"></i>
-            <button id="logout-btn" class="logout-button">Logout</button>
-        </div>
-    </header>
-
-    <main class="main-content">
-        <!-- Dashboard View -->
-        <section id="dashboard-view" class="card-section active-view">
-            <h2>Pedidos Ativos</h2>
-            <div class="frete-control">
-                <label>Limite de Frete (%):</label>
-                <input type="number" id="frete-limit" value="4" min="1" max="20">
-                <button id="apply-frete-limit">Aplicar</button>
-            </div>
-            <div id="active-shipments-list" class="shipment-list"></div>
-
-            <section class="card-section notifications">
-                <h2>Histórico de Auditoria</h2>
-                <div id="audit-logs" class="notification-list"></div>
-            </section>
-        </section>
-
-        <!-- Add Shipment View -->
-        <section id="add-shipment-view" class="hidden-view">
-            <h2>Adicionar Novo Pedido</h2>
-            <div class="form-card">
-                <!-- Campos existentes... -->
-                
-                <!-- Novo campo para valor do frete -->
-                <label for="valor-frete">Valor do Frete (R$):</label>
-                <input type="number" id="valor-frete" step="0.01" min="0" required>
-                
-                <!-- Novo campo para valor da NF -->
-                <label for="valor-nf">Valor da NF (R$):</label>
-                <input type="number" id="valor-nf" step="0.01" min="0" required>
-                
-                <!-- Exibição do % do frete -->
-                <div id="frete-percent-display" class="frete-display">
-                    % Frete: <span id="frete-percent-value">0.00%</span>
+    <div class="auth-container">
+        <div class="auth-card">
+            <h2>Cadastro</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Nome de Usuário:</label>
+                    <input type="text" id="register-username" required>
                 </div>
-                
-                <button id="add-order-btn" class="primary-button">Adicionar Pedido</button>
-                <p id="validation-message" class="validation-message"></p>
-            </div>
-        </section>
-
-        <!-- Outras views permanecem iguais... -->
-    </main>
+                <div class="form-group">
+                    <label for="register-email">E-mail:</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Senha:</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                 <div class="form-group">
+                    <label for="register-confirm-password">Confirmar Senha:</label>
+                    <input type="password" id="register-confirm-password" required>
+                </div>
+                <!-- Novo campo adicionado -->
+                <div class="form-group">
+                    <label for="register-profile">Perfil:</label>
+                    <select id="register-profile" required>
+                        <option value="admin">Administrador</option>
+                        <option value="vendas">Vendas</option>
+                        <option value="logistica">Logística</option>
+                        <option value="financeiro">Financeiro</option>
+                    </select>
+                </div>
+                <button type="submit" class="primary-button">Cadastrar</button>
+                <p class="auth-switch">Já tem uma conta? <a href="login.html">Entrar aqui</a></p>
+                <p id="register-message" class="validation-message"></p>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
 
     <!-- Bottom Navigation (permanece igual) -->
 
