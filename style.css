@@ -36,10 +36,6 @@ body {
     pointer-events: none; /* Impede interações */
     display: none; /* Finalmente, esconde completamente */
 }
-/* Se precisar de uma transição mais suave, use apenas opacity/visibility.
-   Se quiser sumir imediatamente, use display: none.
-   Eu adicionei display: none para garantir que some totalmente do fluxo. */
-
 
 .auth-box {
     background-color: #fff;
@@ -201,6 +197,7 @@ body {
 
 .order-form input[type="text"],
 .order-form input[type="date"],
+.order-form input[type="number"], /* Aggiunto per i nuovi campi */
 .order-form textarea {
     width: calc(100% - 22px);
     padding: 10px;
@@ -287,10 +284,16 @@ body {
     color: white;
 }
 
+/* Colori per gli stati dei pedidos */
 .status.pending { background-color: #ffc107; } /* Amarelo */
-.status.in-transit { background-color: #007bff; } /* Azul */
-.status.delivered { background-color: #28a745; } /* Verde */
-.status.cancelled { background-color: #dc3545; } /* Vermelho */
+.status.venda_concluida { background-color: #17a2b8; } /* Azul ciano */
+.status.nota_fiscal_emitida { background-color: #6f42c1; } /* Roxo */
+.status.coletado { background-color: #28a745; } /* Verde scuro */
+.status.em_transito { background-color: #007bff; } /* Azul */
+.status.em_rota_entrega { background-color: #fd7e14; } /* Arancione */
+.status.retirado_cliente { background-color: #6c757d; } /* Grigio (Finale) */
+.status.cancelled { background-color: #dc3545; } /* Vermelho (Finale) */
+
 
 .shipment-card p {
     margin: 5px 0;
@@ -301,6 +304,10 @@ body {
 .shipment-card .card-actions {
     margin-top: 15px;
     text-align: right;
+    display: flex; /* Usa flexbox per allineare selettore e pulsante */
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px; /* Spazio tra gli elementi */
 }
 
 /* Card de Transportadora */
@@ -310,7 +317,7 @@ body {
     margin-top: 5px;
 }
 
-/* Notificações */
+/* Notificazioni */
 .notification-card {
     border-left: 5px solid #2193b0;
     display: flex;
@@ -543,7 +550,25 @@ body {
     background-color: #34495e;
 }
 
-.bottom-nav .nav-item i {
-    font-size: 1.4em;
-    margin-bottom: 3px;
+/* Per la percentual del frete */
+#freight-percentage-display {
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #f0f0f0;
+    text-align: center;
+}
+
+#freight-percentage {
+    font-size: 1.1em;
+}
+
+/* Per i selettori di stato nell'elenco degli invii */
+.status-selector {
+    padding: 6px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    font-size: 0.9em;
+    cursor: pointer;
 }
