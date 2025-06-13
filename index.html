@@ -56,16 +56,32 @@
                         <input type="text" id="client-name" required>
                     </div>
                     <div class="form-group">
-                        <label for="delivery-address">Endereço de Entrega:</label>
-                        <input type="text" id="delivery-address" required>
-                    </div>
-                    <div class="form-group">
                         <label for="product-description">Descrição do Produto:</label>
                         <textarea id="product-description" rows="3" required></textarea>
                     </div>
                     <div class="form-group">
+                        <label for="freight-value">Valor do Frete (R$):</label>
+                        <input type="number" id="freight-value" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="order-value">Valor Total do Pedido (R$):</label>
+                        <input type="number" id="order-value" step="0.01" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="departure-address">Endereço de Partida:</label>
+                        <input type="text" id="departure-address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="delivery-address">Endereço de Destino:</label>
+                        <input type="text" id="delivery-address" required>
+                    </div>
+                    <div class="form-group">
                         <label for="delivery-date">Data de Entrega:</label>
                         <input type="date" id="delivery-date" required>
+                    </div>
+                    <div class="form-group" id="freight-percentage-display">
+                        <label>Percentual do Frete:</label>
+                        <span id="freight-percentage" style="font-weight: bold;">--</span>
                     </div>
                     <button type="submit" class="btn-primary">Adicionar Pedido</button>
                 </form>
@@ -78,27 +94,17 @@
                     <select id="status-filter">
                         <option value="all">Todos os Status</option>
                         <option value="pending">Pendente</option>
-                        <option value="in-transit">Em Trânsito</option>
-                        <option value="delivered">Entregue</option>
+                        <option value="venda_concluida">Venda Concluída</option>
+                        <option value="nota_fiscal_emitida">Nota Fiscal Emitida</option>
+                        <option value="coletado">Coletado</option>
+                        <option value="em_transito">Em Trânsito</option>
+                        <option value="em_rota_entrega">Em Rota de Entrega</option>
+                        <option value="retirado_cliente">Retirado pelo Cliente</option>
                         <option value="cancelled">Cancelado</option>
                     </select>
                 </div>
                 <div class="active-shipments-list" id="shipments-list">
-                    <div class="shipment-card" data-id="1">
-                        <div class="card-header">
-                            <h3>Pedido #001 - Cliente A</h3>
-                            <span class="status pending">Pendente</span>
-                        </div>
-                        <p>Endereço: Rua X, 123</p>
-                        <p>Produto: Celular</p>
-                        <p>Entrega: 2025-06-15</p>
-                        <p>Responsável: Vendedor XPTO</p>
-                        <div class="card-actions">
-                            <button class="btn-secondary update-status-btn" data-current-status="pending">Atualizar Status</button>
-                            <button class="btn-secondary view-chat-btn" data-id="1">Ver Chat</button>
-                        </div>
                     </div>
-                </div>
             </section>
 
             <section id="transporters-section" class="dashboard-section">
@@ -115,38 +121,22 @@
                     </select>
                 </div>
                 <div class="transporter-list" id="transporters-list">
-                    <div class="transporter-card">
-                        <h3>Transportadora A</h3>
-                        <p>Contato: (11) 9876-5432</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i> (4.5)
-                        </div>
                     </div>
-                </div>
             </section>
 
             <section id="notifications-section" class="dashboard-section">
                 <h2>Notificações</h2>
                 <div class="notification-list" id="notifications-list">
-                    <div class="notification-card unread">
-                        <p>Novo pedido #003 adicionado por Vendedor Z.</p>
-                        <span>2 horas atrás</span>
                     </div>
-                </div>
             </section>
 
             <section id="chat-section" class="dashboard-section chat-overlay">
                 <div class="chat-header">
-                    <h3 id="chat-order-title">Chat do Pedido #ID</h3>
+                    <h3 id="chat-order-title">Chat do Pedido</h3>
                     <button id="close-chat-btn" class="btn-secondary">X</button>
                 </div>
                 <div class="chat-messages" id="chat-messages">
-                    <div class="chat-message received">
-                        <span class="message-sender">Logística</span>
-                        <p>Olá, o pedido já saiu para entrega?</p>
-                        <span class="message-time">14:30</span>
                     </div>
-                </div>
                 <div class="chat-input-area">
                     <input type="text" id="chat-input" placeholder="Digite sua mensagem...">
                     <label for="chat-file-input" class="file-upload-btn">
