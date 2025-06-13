@@ -1,6 +1,82 @@
-/* Adicione ao final do arquivo */
+/* Stili Generali */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+    color: #333;
+    overflow-x: hidden;
+}
 
-/* Estilos para controle de frete */
+.header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.notification-icon {
+    font-size: 22px;
+    cursor: pointer;
+    color: #f1c40f;
+}
+
+.logout-button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #c0392b;
+}
+
+.main-content {
+    padding: 20px;
+    padding-bottom: 80px;
+}
+
+.card-section {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+.card-section h2 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+/* ===== NOVOS ESTILOS ADICIONADOS ===== */
 .frete-control {
     display: flex;
     align-items: center;
@@ -43,7 +119,6 @@
     color: #721c24;
 }
 
-/* Estilos para histórico de auditoria */
 .audit-log {
     padding: 10px;
     border-bottom: 1px solid #eee;
@@ -66,13 +141,19 @@
     font-size: 12px;
 }
 
-/* Responsividade para timeline */
-@media (max-width: 768px) {
-    .timeline-step {
-        min-width: 85px !important;
-    }
-    
-    .timeline-step .label {
-        font-size: 7px !important;
-    }
+/* Resto do seu CSS original permanece abaixo */
+.shipment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
+
+.shipment-card {
+    background-color: #fdfdfd;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+/* ... continue com todo o resto do seu CSS original ... */
