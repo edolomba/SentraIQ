@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Element Selectors ---
+    // --- Seletores de Elementos ---
     const authPage = document.getElementById('auth-page');
     const loginSection = document.getElementById('login-section');
     const registerSection = document.getElementById('register-section');
@@ -14,30 +14,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerEmailInput = document.getElementById('register-email');
     const registerPasswordInput = document.getElementById('register-password');
     const registerPasswordConfirmInput = document.getElementById('register-password-confirm');
-    const registerRoleSelect = document.getElementById('register-role'); // New: Role select
+    const registerRoleSelect = document.getElementById('register-role'); // Novo: Seleção de Papel
 
     const dashboardPage = document.getElementById('dashboard-page');
     const displayUserEmail = document.getElementById('display-user-email');
     const displayUserRole = document.getElementById('display-user-role');
 
-    // Dashboard Sections
+    // Seções do Dashboard
     const addOrderSection = document.getElementById('add-order-section');
     const activeShipmentsSection = document.getElementById('active-shipments-section');
     const transportersSection = document.getElementById('transporters-section');
     const notificationsSection = document.getElementById('notifications-section');
     const chatSection = document.getElementById('chat-section');
-    const mapSection = document.getElementById('map-section'); // New: Map section
+    const mapSection = document.getElementById('map-section'); // Novo: Seção do Mapa
 
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
 
-    // Add Order Form
+    // Formulário Adicionar Pedido
     const addOrderForm = document.getElementById('add-order-form');
     const clientNameInput = document.getElementById('client-name');
     const deliveryAddressInput = document.getElementById('delivery-address');
     const productDescriptionInput = document.getElementById('product-description');
     const deliveryDateInput = document.getElementById('delivery-date');
 
-    // Shipments List
+    // Lista de Envios
     const shipmentsList = document.getElementById('shipments-list');
     const shipmentSearchInput = document.getElementById('shipment-search');
     const statusFilterSelect = document.getElementById('status-filter');
@@ -46,35 +46,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatOrderTitle = document.getElementById('chat-order-title');
     const chatMessagesContainer = document.getElementById('chat-messages');
     const chatInput = document.getElementById('chat-input');
-    const chatFileInput = document.getElementById('chat-file-input'); // New: File input
+    const chatFileInput = document.getElementById('chat-file-input'); // Novo: Input de arquivo
     const sendChatBtn = document.getElementById('send-chat-btn');
     const closeChatBtn = document.getElementById('close-chat-btn');
 
-    // Mock Data for Shipments and Transporters (we'll replace this with Firestore later)
+    // Dados Mock (simulados) para Envios e Transportadoras
     let mockShipments = JSON.parse(localStorage.getItem('mockShipments')) || [
-        { id: '1', client: 'Cliente A', address: 'Rua X, 123', product: 'Celular', date: '2025-06-15', status: 'pending', createdBy: 'venda@example.com', currentChatMessages: [{sender: 'System', text: 'Chat started for Pedido #001', time: '10:00'}] },
-        { id: '2', client: 'Cliente B', address: 'Av. Y, 456', product: 'Geladeira', date: '2025-06-20', status: 'in-transit', createdBy: 'logistica@example.com', currentChatMessages: [{sender: 'System', text: 'Chat started for Pedido #002', time: '11:00'}] },
-        { id: '3', client: 'Cliente C', address: 'Via Z, 789', product: 'TV', date: '2025-07-01', status: 'delivered', createdBy: 'venda@example.com', currentChatMessages: [{sender: 'System', text: 'Chat started for Pedido #003', time: '12:00'}] }
+        { id: '1', client: 'Cliente A', address: 'Rua X, 123', product: 'Celular', date: '2025-06-15', status: 'pending', createdBy: 'vendas@example.com', currentChatMessages: [{sender: 'Sistema', text: 'Chat iniciado para Pedido #001', time: '10:00'}] },
+        { id: '2', client: 'Cliente B', address: 'Av. Y, 456', product: 'Geladeira', date: '2025-06-20', status: 'in-transit', createdBy: 'logistica@example.com', currentChatMessages: [{sender: 'Sistema', text: 'Chat iniciado para Pedido #002', time: '11:00'}] },
+        { id: '3', client: 'Cliente C', address: 'Via Z, 789', product: 'TV', date: '2025-07-01', status: 'delivered', createdBy: 'vendas@example.com', currentChatMessages: [{sender: 'Sistema', text: 'Chat iniciado para Pedido #003', time: '12:00'}] }
     ];
     let mockTransporters = JSON.parse(localStorage.getItem('mockTransporters')) || [
         { name: 'Transportadora A', contact: '(11) 9876-5432', rating: 4.5 },
         { name: 'Transportadora B', contact: '(21) 1234-5678', rating: 4.0 },
         { name: 'Transportadora C', contact: '(31) 5555-4444', rating: 3.8 }
     ];
-    // This will store the currently logged-in user's role
+    
+    // Variáveis para o usuário logado
     let currentUserRole = null;
-    let currentUserId = null; // We'll simulate a user ID for chat
+    let currentUserId = null; // Simulará um ID de usuário para o chat
     let currentUserEmail = null;
 
-    // --- Utility Functions ---
+    // --- Funções de Utilitário ---
 
-    // Function to show a specific section and hide others
+    // Função para mostrar uma seção específica e ocultar as outras
     const showSection = (sectionElement) => {
         document.querySelectorAll('.dashboard-section').forEach(sec => sec.classList.remove('active'));
-        sectionElement.classList.add('active');
+        if (sectionElement) { // Verifica se o elemento existe antes de adicionar a classe
+            sectionElement.classList.add('active');
+        }
     };
 
-    // Update bottom navigation active state
+    // Atualiza o estado ativo da navegação inferior
     const updateNavActiveState = (targetId) => {
         navItems.forEach(item => {
             if (item.dataset.target === targetId) {
@@ -85,44 +88,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- Authentication & User State Management (Mock) ---
+    // --- Gerenciamento de Autenticação e Estado do Usuário (Mock) ---
 
-    // Function to update UI based on user's role
+    // Função para atualizar a UI com base no papel do usuário
     const updateUIVisibility = () => {
-        // Hide all potentially role-restricted elements first
+        // Oculta todas as seções por padrão
         addOrderSection.classList.add('hidden');
-        // Example: Specific buttons, or entire sections. Add more as needed.
+        activeShipmentsSection.classList.add('hidden');
+        transportersSection.classList.add('hidden');
+        notificationsSection.classList.add('hidden');
+        mapSection.classList.add('hidden');
+        // A seção de chat é um overlay e é gerenciada separadamente
 
-        // Show elements based on currentUserRole
+        // Mostra elementos com base no currentUserRole
         if (currentUserRole) {
-            // All roles can see active shipments, transporters, notifications, map
-            activeShipmentsSection.classList.remove('hidden');
-            transportersSection.classList.remove('hidden');
-            notificationsSection.classList.remove('hidden');
-            mapSection.classList.remove('hidden');
+            // Regras de visibilidade:
+            // Admin vê tudo
+            // Vendas pode adicionar pedidos e ver seus envios
+            // Logística vê envios e transportadoras
+            // Financeiro vê notificações e transportadoras (pode ter relatórios futuros)
 
             switch (currentUserRole) {
                 case 'venda':
-                    addOrderSection.classList.remove('hidden'); // Venda can add orders
+                    addOrderSection.classList.remove('hidden'); // Vendas pode adicionar pedidos
+                    activeShipmentsSection.classList.remove('hidden'); // Vendas vê os envios
+                    // Vendas pode ver transportadoras e notificações se necessário
+                    transportersSection.classList.remove('hidden');
+                    notificationsSection.classList.remove('hidden');
                     break;
                 case 'logistica':
-                    // Logistica has broader access to shipments (e.g., update status)
-                    // (Actual button visibility/enabling would be handled during shipment rendering)
+                    activeShipmentsSection.classList.remove('hidden');
+                    transportersSection.classList.remove('hidden');
+                    notificationsSection.classList.remove('hidden');
+                    mapSection.classList.remove('hidden'); // Logística pode ver o mapa
                     break;
                 case 'financeiro':
-                    // Financeiro might have specific reports section (not yet implemented)
+                    notificationsSection.classList.remove('hidden');
+                    transportersSection.classList.remove('hidden');
+                    // Pode ver relatórios financeiros futuros aqui
                     break;
                 case 'admin':
-                    addOrderSection.classList.remove('hidden'); // Admin can add orders
-                    // Admin sees everything
+                    // Administrador vê TUDO
+                    addOrderSection.classList.remove('hidden');
+                    activeShipmentsSection.classList.remove('hidden');
+                    transportersSection.classList.remove('hidden');
+                    notificationsSection.classList.remove('hidden');
+                    mapSection.classList.remove('hidden');
                     break;
                 default:
-                    // Fallback for unknown roles
+                    // Fallback para papéis desconhecidos ou vazios
                     break;
             }
         }
-        // Ensure only one dashboard section is active on load or login
-        showSection(activeShipmentsSection); // Default view after login
+        // Garante que uma seção ativa seja mostrada, geralmente a de envios
+        showSection(activeShipmentsSection); // Visão padrão após o login
         updateNavActiveState('active-shipments-section');
     };
 
@@ -132,22 +151,22 @@ document.addEventListener('DOMContentLoaded', () => {
         if (loggedInUser && loggedInUser.email && loggedInUser.role) {
             currentUserEmail = loggedInUser.email;
             currentUserRole = loggedInUser.role;
-            // Simulate a user ID based on email for chat purposes
-            currentUserId = loggedInUser.email.split('@')[0];
+            currentUserId = loggedInUser.email.split('@')[0]; // Simula um ID de usuário
 
             displayUserEmail.textContent = currentUserEmail;
-            displayUserRole.textContent = currentUserRole.charAt(0).toUpperCase() + currentUserRole.slice(1); // Capitalize first letter
+            displayUserRole.textContent = currentUserRole.charAt(0).toUpperCase() + currentUserRole.slice(1); // Capitaliza a primeira letra
 
-            authPage.classList.remove('active');
-            dashboardPage.classList.add('active');
-            updateUIVisibility(); // Adjust UI based on role
-            renderShipments(); // Render shipments for the current user
-            renderTransporters(); // Render transporters
-            renderNotifications(); // Render notifications
+            authPage.classList.remove('active'); // Esconde a página de autenticação
+            dashboardPage.classList.add('active');   // Mostra o dashboard
+            
+            updateUIVisibility(); // Ajusta a UI com base no papel
+            renderShipments(); // Renderiza os envios para o usuário atual
+            renderTransporters(); // Renderiza as transportadoras
+            renderNotifications(); // Renderiza as notificações
         } else {
-            authPage.classList.add('active');
-            dashboardPage.classList.remove('active');
-            showLoginSection(); // Ensure login is shown if not logged in
+            authPage.classList.add('active');    // Mostra a página de autenticação
+            dashboardPage.classList.remove('active'); // Esconde o dashboard
+            showLoginSection(); // Garante que a seção de login esteja visível
         }
     };
 
@@ -166,14 +185,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = loginEmailInput.value;
         const password = loginPasswordInput.value;
 
-        // Mocking user check: check if user exists in mock storage
+        // Mocking user check: verifica se o usuário existe no mock storage
         const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {};
         if (registeredUsers[email] && registeredUsers[email].password === password) {
             localStorage.setItem('loggedInUser', JSON.stringify({ email: email, role: registeredUsers[email].role }));
-            alert('Login successful!');
-            checkAuthStatus(); // Re-check status to navigate to dashboard
+            alert('Login realizado com sucesso!');
+            checkAuthStatus(); // <-- CHIAMATA CRUCIALE per mostrare il dashboard
         } else {
-            alert('Invalid credentials or user not registered.');
+            alert('Credenciais inválidas ou usuário não cadastrado.');
         }
     };
 
@@ -184,31 +203,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const confirmPassword = registerPasswordConfirmInput.value;
         const role = registerRoleSelect.value;
 
-        if (!email || !password || !confirmPassword || !role) {
-            alert('Please fill all fields, including role.');
+        if (!email || !password || !confirmPassword) {
+            alert('Por favor, preencha todos os campos.');
             return;
+        }
+        if (!role) {
+             alert('Por favor, selecione seu papel (Vendas, Logística, Financeiro, Administrador).');
+             return;
         }
 
         if (password !== confirmPassword) {
-            alert('Passwords do not match.');
+            alert('As senhas não coincidem.');
             return;
         }
 
-        // Mocking user registration: save to localStorage
+        // Mocking user registration: salva no localStorage
         let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || {};
         if (registeredUsers[email]) {
-            alert('User with this email already exists!');
+            alert('Já existe um usuário com este email!');
             return;
         }
 
         registeredUsers[email] = { password: password, role: role };
         localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-        alert('Registration successful! Please login.');
+        alert('Cadastro realizado com sucesso! Por favor, faça o login.');
         showLoginSection();
         registerEmailInput.value = '';
         registerPasswordInput.value = '';
         registerPasswordConfirmInput.value = '';
-        registerRoleSelect.value = '';
+        registerRoleSelect.value = ''; // Limpa a seleção de papel
     };
 
     const handleLogout = () => {
@@ -216,17 +239,17 @@ document.addEventListener('DOMContentLoaded', () => {
         currentUserEmail = null;
         currentUserRole = null;
         currentUserId = null;
-        alert('Logged out.');
-        checkAuthStatus(); // Re-check status to navigate back to login
+        alert('Você saiu da conta.');
+        checkAuthStatus(); // Re-verifica o status para retornar à tela de login
     };
 
-    // --- Shipment Management (Mock) ---
+    // --- Gerenciamento de Envios (Mock) ---
 
     const renderShipments = () => {
-        shipmentsList.innerHTML = ''; // Clear current list
+        shipmentsList.innerHTML = ''; // Limpa a lista atual
         let filteredShipments = mockShipments;
 
-        // Apply search filter
+        // Aplica filtro de busca
         const searchTerm = shipmentSearchInput.value.toLowerCase();
         if (searchTerm) {
             filteredShipments = filteredShipments.filter(shipment =>
@@ -236,22 +259,22 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
 
-        // Apply status filter
+        // Aplica filtro de status
         const statusFilter = statusFilterSelect.value;
         if (statusFilter !== 'all') {
             filteredShipments = filteredShipments.filter(shipment => shipment.status === statusFilter);
         }
 
-        // Apply role-based filtering (NEW!)
+        // Aplica filtro baseado em papel (NOVO!)
         if (currentUserRole && currentUserRole !== 'admin') {
             filteredShipments = filteredShipments.filter(shipment => {
                 if (currentUserRole === 'venda') {
-                    // Venda sees only their own created shipments
+                    // Vendas vê apenas os envios que criou
                     return shipment.createdBy === currentUserEmail;
                 }
-                // For logistica, financeiro, they might see all within their company,
-                // but for this mock, we'll assume 'logistica' and 'financeiro' see all shipments.
-                // In a real app, this would be based on companyId.
+                // Para logística, financeiro, eles veriam todos dentro da empresa
+                // Para este mock, assumiremos que 'logistica' e 'financeiro' vêem todos os envios.
+                // Em um aplicativo real, isso seria baseado em companyId.
                 return true;
             });
         }
@@ -268,7 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
             shipmentCard.dataset.id = shipment.id;
 
             let updateButtonHtml = '';
-            // Only Logistica and Admin can update status in this mock
+            // Apenas Logística e Admin podem atualizar o status neste mock
             if (currentUserRole === 'logistica' || currentUserRole === 'admin') {
                  updateButtonHtml = `<button class="btn-secondary update-status-btn" data-current-status="${shipment.status}">Atualizar Status</button>`;
             }
@@ -291,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
             shipmentsList.appendChild(shipmentCard);
         });
 
-        // Add event listeners to newly rendered buttons
+        // Adiciona event listeners aos botões recém-renderizados
         document.querySelectorAll('.update-status-btn').forEach(button => {
             button.onclick = (e) => handleUpdateStatus(e.target);
         });
@@ -319,17 +342,17 @@ document.addEventListener('DOMContentLoaded', () => {
             address: deliveryAddress,
             product: productDescription,
             date: deliveryDate,
-            status: 'pending', // Default status for new orders
-            createdBy: currentUserEmail, // Track who created the order
-            currentChatMessages: [{sender: 'System', text: `Chat started for Pedido #${newOrderId}`, time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}]
+            status: 'pending', // Status padrão para novos pedidos
+            createdBy: currentUserEmail, // Rastreia quem criou o pedido
+            currentChatMessages: [{sender: 'Sistema', text: `Chat iniciado para Pedido #${newOrderId}`, time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}]
         };
 
         mockShipments.push(newOrder);
-        localStorage.setItem('mockShipments', JSON.stringify(mockShipments)); // Save to mock storage
+        localStorage.setItem('mockShipments', JSON.stringify(mockShipments)); // Salva no mock storage
         alert('Novo pedido adicionado com sucesso!');
-        addOrderForm.reset(); // Clear the form
-        renderShipments(); // Re-render shipments to show the new one
-        showSection(activeShipmentsSection); // Go back to shipments list
+        addOrderForm.reset(); // Limpa o formulário
+        renderShipments(); // Re-renderiza os envios para mostrar o novo
+        showSection(activeShipmentsSection); // Volta para a lista de envios
         updateNavActiveState('active-shipments-section');
     };
 
@@ -338,37 +361,46 @@ document.addEventListener('DOMContentLoaded', () => {
         const shipmentId = shipmentCard.dataset.id;
         const currentStatus = button.dataset.currentStatus;
 
+        // Definindo a ordem das transições de status
         const statusOptions = ['pending', 'in-transit', 'delivered', 'cancelled'];
         const currentIndex = statusOptions.indexOf(currentStatus);
-        const nextStatus = statusOptions[(currentIndex + 1) % statusOptions.length]; // Cycle through statuses
+        
+        let nextStatus;
+        if (currentStatus === 'delivered' || currentStatus === 'cancelled') {
+            // Se já está entregue ou cancelado, não muda mais
+            alert('Este pedido já foi finalizado ou cancelado e não pode ter o status atualizado.');
+            return;
+        } else {
+            // Cicla para o próximo status na ordem
+            nextStatus = statusOptions[(currentIndex + 1) % statusOptions.length]; 
+        }
 
-        // In a real app, this would involve more complex state transitions and permissions
-        if (confirm(`Deseja mudar o status do Pedido #${shipmentId} de "${currentStatus}" para "${nextStatus}"?`)) {
+        if (confirm(`Deseja mudar o status do Pedido #${shipmentId} de "${currentStatus.charAt(0).toUpperCase() + currentStatus.slice(1).replace('-', ' ')}" para "${nextStatus.charAt(0).toUpperCase() + nextStatus.slice(1).replace('-', ' ')}"?`)) {
             const shipmentIndex = mockShipments.findIndex(s => s.id === shipmentId);
             if (shipmentIndex !== -1) {
                 mockShipments[shipmentIndex].status = nextStatus;
-                // Add a mock chat message about the status update
+                // Adiciona uma mensagem de chat mock sobre a atualização de status
                 mockShipments[shipmentIndex].currentChatMessages.push({
-                    sender: 'System',
-                    text: `Status updated to "${nextStatus.charAt(0).toUpperCase() + nextStatus.slice(1).replace('-', ' ')}" by ${currentUserRole}.`,
+                    sender: 'Sistema',
+                    text: `Status atualizado para "${nextStatus.charAt(0).toUpperCase() + nextStatus.slice(1).replace('-', ' ')}" por ${currentUserRole.charAt(0).toUpperCase() + currentUserRole.slice(1)}.`,
                     time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
                 });
 
                 localStorage.setItem('mockShipments', JSON.stringify(mockShipments));
-                renderShipments(); // Re-render to reflect changes
-                alert(`Status do Pedido #${shipmentId} atualizado para ${nextStatus}!`);
+                renderShipments(); // Re-renderiza para refletir as mudanças
+                alert(`Status do Pedido #${shipmentId} atualizado para ${nextStatus.charAt(0).toUpperCase() + nextStatus.slice(1).replace('-', ' ')}!`);
             }
         }
     };
 
-    // --- Transporter Management (Mock) ---
+    // --- Gerenciamento de Transportadoras (Mock) ---
     const renderTransporters = () => {
         const transportersList = document.getElementById('transporters-list');
         transportersList.innerHTML = '';
 
         let filteredTransporters = mockTransporters;
 
-        // Apply search filter (mock)
+        // Aplica filtro de busca (mock)
         const searchTerm = document.getElementById('transporter-search').value.toLowerCase();
         if (searchTerm) {
             filteredTransporters = filteredTransporters.filter(transporter =>
@@ -377,9 +409,9 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
 
-        // Apply rating filter (mock)
+        // Aplica filtro de avaliação (mock)
         const ratingFilter = parseFloat(document.getElementById('rating-filter').value);
-        if (!isNaN(ratingFilter) && ratingFilter !== 'all') {
+        if (!isNaN(ratingFilter) && document.getElementById('rating-filter').value !== 'all') { // Check for 'all' string
             filteredTransporters = filteredTransporters.filter(transporter =>
                 Math.floor(transporter.rating) === ratingFilter
             );
@@ -413,27 +445,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // --- Notifications Management (Mock) ---
+    // --- Gerenciamento de Notificações (Mock) ---
     const renderNotifications = () => {
         const notificationsList = document.getElementById('notifications-list');
         notificationsList.innerHTML = '';
-        // Mock notifications - these would come from a database in a real app
+        // Notificações Mock - em um aplicativo real, viriam de um banco de dados
         const mockNotifications = [
-            { id: 1, text: 'Pedido #001 - Status atualizado para "Em Trânsito".', time: '10 min atrás', read: true },
-            { id: 2, text: 'Novo pedido #003 adicionado por Vendedor Z.', time: '2 horas atrás', read: false },
-            { id: 3, text: 'Você tem uma nova mensagem no chat do Pedido #002.', time: '30 min atrás', read: false, roles: ['logistica', 'venda', 'admin'] } // Example of role-specific mock notification
+            { id: 1, text: 'Pedido #001 - Status atualizado para "Em Trânsito".', time: '10 min atrás', read: true, roles: ['logistica', 'admin'] },
+            { id: 2, text: 'Novo pedido #003 adicionado por Vendas Z.', time: '2 horas atrás', read: false, roles: ['venda', 'admin'] },
+            { id: 3, text: 'Você tem uma nova mensagem no chat do Pedido #002.', time: '30 min atrás', read: false, roles: ['logistica', 'venda', 'admin', 'financeiro'] },
+            { id: 4, text: 'Relatório financeiro mensal disponível.', time: '1 dia atrás', read: true, roles: ['financeiro', 'admin'] }
         ];
 
         let filteredNotifications = mockNotifications;
 
-        // Filter notifications based on role (mock logic)
+        // Filtra notificações com base no papel (lógica mock)
         if (currentUserRole && currentUserRole !== 'admin') {
              filteredNotifications = mockNotifications.filter(notif => {
-                // If a notification has 'roles' property, only show to those roles
-                if (notif.roles && !notif.roles.includes(currentUserRole)) {
-                    return false;
-                }
-                return true;
+                // Se uma notificação tem a propriedade 'roles', mostra apenas para esses papéis
+                // Se não tem 'roles', mostra para todos (notificações gerais)
+                return !notif.roles || notif.roles.includes(currentUserRole);
             });
         }
 
@@ -455,7 +486,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
 
-    // --- Chat Management (Mock with File Attachment Simulation) ---
+    // --- Gerenciamento de Chat (Mock com Simulação de Anexo de Arquivo) ---
     let activeChatShipmentId = null;
 
     const openChat = (shipmentId) => {
@@ -464,25 +495,25 @@ document.addEventListener('DOMContentLoaded', () => {
         if (shipment) {
             chatOrderTitle.textContent = `Chat do Pedido #${shipment.id} - ${shipment.client}`;
             renderChatMessages(shipment.currentChatMessages || []);
-            chatSection.classList.add('active'); // Show chat overlay
+            chatSection.classList.add('active'); // Mostra o overlay do chat
         }
     };
 
     const closeChat = () => {
-        chatSection.classList.remove('active'); // Hide chat overlay
+        chatSection.classList.remove('active'); // Oculta o overlay do chat
         activeChatShipmentId = null;
-        chatMessagesContainer.innerHTML = ''; // Clear messages
+        chatMessagesContainer.innerHTML = ''; // Limpa as mensagens
     };
 
     const renderChatMessages = (messages) => {
         chatMessagesContainer.innerHTML = '';
         messages.forEach(msg => {
             const messageDiv = document.createElement('div');
-            // Mock sender, real app would check if sender.uid === currentUser.uid
-            const isSentByMe = msg.sender === `Você (${currentUserRole})`; // Simple mock check
+            // Mock do remetente, app real verificaria se sender.uid === currentUser.uid
+            const isSentByMe = msg.sender.includes(`Você (${currentUserRole.charAt(0).toUpperCase() + currentUserRole.slice(1)})`); // Verificação mock simples
             messageDiv.classList.add('chat-message', isSentByMe ? 'sent' : 'received');
 
-            let messageContent = `<span class="message-sender">${isSentByMe ? 'Você' : msg.sender}</span>`;
+            let messageContent = `<span class="message-sender">${msg.sender}</span>`;
             if (msg.text) {
                 messageContent += `<p>${msg.text}</p>`;
             }
@@ -505,12 +536,12 @@ document.addEventListener('DOMContentLoaded', () => {
             messageDiv.innerHTML = messageContent;
             chatMessagesContainer.appendChild(messageDiv);
         });
-        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; // Scroll to bottom
+        chatMessagesContainer.scrollTop = chatMessagesContainer.scrollHeight; // Rola para o final
     };
 
     const handleSendMessage = () => {
         const messageText = chatInput.value.trim();
-        const selectedFile = chatFileInput.files[0]; // Get the selected file
+        const selectedFile = chatFileInput.files[0]; // Pega o arquivo selecionado
 
         if (!messageText && !selectedFile) {
             alert('Por favor, digite uma mensagem ou selecione um arquivo para enviar.');
@@ -526,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (shipmentIndex === -1) return;
 
         const newMessage = {
-            sender: `Você (${currentUserRole})`, // Mock sender
+            sender: `Você (${currentUserRole.charAt(0).toUpperCase() + currentUserRole.slice(1)})`, // Remetente Mock
             time: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
         };
 
@@ -534,69 +565,70 @@ document.addEventListener('DOMContentLoaded', () => {
             newMessage.text = messageText;
         }
 
-        // --- Mocking File Upload ---
+        // --- Simulação de Upload de Arquivo ---
         if (selectedFile) {
-            // In a real app, you'd upload this file to Firebase Storage
-            // For now, we'll create a mock URL and file info
-            newMessage.fileUrl = URL.createObjectURL(selectedFile); // Create a temporary URL
+            // Em um app real, você faria o upload deste arquivo para o Firebase Storage
+            // Por enquanto, criaremos uma URL mock e informações do arquivo
+            newMessage.fileUrl = URL.createObjectURL(selectedFile); // Cria uma URL temporária
             newMessage.fileName = selectedFile.name;
             newMessage.fileType = selectedFile.type;
-            console.log(`Mock file uploaded: ${selectedFile.name} (${selectedFile.type})`);
+            console.log(`Arquivo mock carregado: ${selectedFile.name} (${selectedFile.type})`);
         }
 
         mockShipments[shipmentIndex].currentChatMessages.push(newMessage);
-        localStorage.setItem('mockShipments', JSON.stringify(mockShipments)); // Update mock storage
+        localStorage.setItem('mockShipments', JSON.stringify(mockShipments)); // Atualiza o mock storage
 
         renderChatMessages(mockShipments[shipmentIndex].currentChatMessages);
-        chatInput.value = ''; // Clear text input
-        chatFileInput.value = ''; // Clear file input
+        chatInput.value = ''; // Limpa o input de texto
+        chatFileInput.value = ''; // Limpa o input de arquivo
     };
 
 
     // --- Event Listeners ---
 
-    // Auth page navigation
+    // Navegação da página de autenticação
     showRegisterLink.addEventListener('click', showRegisterSection);
     showLoginLink.addEventListener('click', showLoginSection);
     loginButton.addEventListener('click', handleLogin);
     registerButton.addEventListener('click', handleRegister);
     logoutButton.addEventListener('click', handleLogout);
 
-    // Dashboard navigation
+    // Navegação do Dashboard
     navItems.forEach(item => {
         item.addEventListener('click', () => {
             const targetId = item.dataset.target;
             showSection(document.getElementById(targetId));
             updateNavActiveState(targetId);
 
-            // Re-render certain sections when navigating to them to ensure filters are applied
+            // Re-renderiza certas seções ao navegar para elas para garantir que os filtros sejam aplicados
             if (targetId === 'active-shipments-section') renderShipments();
             if (targetId === 'transporters-section') renderTransporters();
             if (targetId === 'notifications-section') renderNotifications();
         });
     });
 
-    // Add Order Form
+    // Formulário Adicionar Pedido
     addOrderForm.addEventListener('submit', handleAddOrder);
 
-    // Shipments Search and Filter
+    // Busca e Filtro de Envios
     shipmentSearchInput.addEventListener('input', renderShipments);
     statusFilterSelect.addEventListener('change', renderShipments);
 
-    // Transporter Search and Filter
+    // Busca e Filtro de Transportadoras
     document.getElementById('transporter-search').addEventListener('input', renderTransporters);
     document.getElementById('rating-filter').addEventListener('change', renderTransporters);
 
-    // Chat events
+    // Eventos do Chat
     sendChatBtn.addEventListener('click', handleSendMessage);
     chatInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
+            e.preventDefault(); // Impede o envio do formulário padrão se houver
             handleSendMessage();
         }
     });
     closeChatBtn.addEventListener('click', closeChat);
 
-    // Mock map controls
+    // Controles do Mapa Mock
     document.getElementById('update-location-btn').addEventListener('click', () => {
         const selectedOrder = document.getElementById('select-order-for-map').value;
         if (selectedOrder) {
@@ -607,9 +639,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
-    // --- Initial Load ---
-    checkAuthStatus(); // Check if user is already logged in on page load
-    renderShipments(); // Initial render of shipments (will be filtered by role)
-    renderTransporters(); // Initial render of transporters
-    renderNotifications(); // Initial render of notifications
+    // --- Carregamento Inicial ---
+    checkAuthStatus(); // Verifica se o usuário já está logado ao carregar a página
 });
